@@ -1,0 +1,56 @@
+﻿@model AdminViewModel
+
+<div class="modal fade" id="alertMessage" tabindex="-1" role="dialog" aria-labelledby="alertMessage-label">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="alertMessage-label"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h3>Add Pie</h3>
+    <form role="form" class="form-inline" asp-controller="Admin" asp-action="AddPie" method="post">
+        <div class="form-group">
+            <label class="control-label" for="pieNameInput">Name</label>
+            <input type="text" asp-for="PieName" class="form-control" id="pieNameInput">
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="pieCategoryInput">Category</label>
+            <select class="form-control" asp-for="CategoryName" id="pieCategoryInput" asp-items="@Model.Categories"></select>
+            <button type="submit" class="btn btn-default">Add pie</button>
+        </div>
+        <dl></dl>
+    </form>
+    <span asp-validation-for="PieName" class="alert-danger"></span>
+    <hr />
+    <h3>Update price</h3>
+    <form role="form" class="form-inline" asp-controller="Admin" asp-action="UpdatePrice" method="post">
+        <div class="form-group">
+            <label class="control-label" for="pieNameSelect">Pie</label>
+            <select class="form-control" asp-for="PieId" asp-items="@Model.Pies" id="pieNameSelect"></select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="priceInput">New price</label>
+            <input type="number" class="form-control" asp-for="Price" id="priceInput" step="0.01" />
+            <button type="submit" class="btn btn-default" onclick="return alertOnUpdatePrice($('#priceInput').val())">Update price</button>
+        </div>
+    </form>
+    <hr />
+    <h3>Add category</h3>
+    <form role="form" id="addCategoryForm" class="form-inline" asp-controller="Admin" asp-action="AddCategory">
+        <div class="form-group">
+            <label class="control-label" for="categoryNameInput">Category name</label>
+            <input type="text" class="form-control" value="" asp-for="CategoryName" id="categoryNameInput">
+            <button type="submit" class="btn btn-default" onclick="return alertOnAddCategory($('#categoryNameInput').val())">Submit</button>
+        </div>
+    </form>
+</div>
