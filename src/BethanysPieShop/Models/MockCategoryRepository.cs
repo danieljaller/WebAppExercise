@@ -29,5 +29,10 @@ namespace BethanysPieShop.Models
         {
             throw new NotImplementedException();
         }
+
+        public void ClearCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

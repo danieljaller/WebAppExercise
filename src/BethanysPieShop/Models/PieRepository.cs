@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder.Internal;
 
 namespace BethanysPieShop.Models
 {
@@ -49,6 +50,19 @@ namespace BethanysPieShop.Models
         public void Save()
         {
             _appDbContext.SaveChanges();
+        }
+
+        public void ClearPies()
+        {
+            _appDbContext.ShoppingCartItems.RemoveRange(_appDbContext.ShoppingCartItems);
+            _appDbContext.Pies.RemoveRange(Pies);
+            _appDbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('ShoppingCartItems', RESEED, 0)");
+            _appDbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Pies', RESEED, 0)");
+        }
+
+        public void SeedDatabase()
+        {
+            DbInitializer.Seed(_appDbContext);
         }
     }
 }

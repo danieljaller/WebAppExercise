@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -16,15 +17,18 @@ namespace BethanysPieShop.Controllers
     {
         private readonly IPieRepository _pieRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public AdminController(IPieRepository pieRepository, ICategoryRepository categoryRepository)
+        public AdminController(IPieRepository pieRepository, ICategoryRepository categoryRepository, IOrderRepository orderRepository)
         {
             _pieRepository = pieRepository;
             _categoryRepository = categoryRepository;
+            _orderRepository = orderRepository;
         }
 
         public IActionResult AddPie()
         {
+
             var vm = new AdminViewModel();
             PopulateVmLists(vm);
             return View(vm);
@@ -49,6 +53,9 @@ namespace BethanysPieShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (viewModel.ExtraDescription == null)
+                    viewModel.ExtraDescription = string.Empty;
+
                 var category = _categoryRepository.Categories.First(x => x.CategoryName == viewModel.CategoryName);
                 var pieName = viewModel.PieName.Trim();
                 _pieRepository.AddPie(new Pie()
@@ -57,7 +64,8 @@ namespace BethanysPieShop.Controllers
                     Category = category,
                     ImageThumbnailUrl = "https://www.postplanner.com/hs-fs/hub/513577/file-2909864225-gif/blog-files/facebook-thumbnail-250px.gif?t=1495052037194&width=250&height=250&name=facebook-thumbnail-250px.gif",
                     ImageUrl = "https://static.mathem.se/shared/images/products/large/07310240060157_c1n1.jpg",
-                    Price = 20000
+                    Price = 20000,
+                    ExtraDescription = viewModel.ExtraDescription
                 });
                 _pieRepository.Save();
 
@@ -91,6 +99,16 @@ namespace BethanysPieShop.Controllers
             
             _categoryRepository.AddCategory(category);
             _categoryRepository.Save();
+            return RedirectToAction("AddPie");
+        }
+
+        public IActionResult SeedDatabase()
+        {
+            _categoryRepository.ClearCategories();
+            _pieRepository.ClearPies();
+            _orderRepository.ClearOrders();
+            _categoryRepository.Save();
+            _pieRepository.SeedDatabase();
             return RedirectToAction("AddPie");
         }
 

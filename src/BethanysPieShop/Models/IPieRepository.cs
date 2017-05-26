@@ -15,5 +15,7 @@ namespace BethanysPieShop.Models
         void AddPie(Pie pie);
         void UpdatePie(Pie pie);
         void Save();
+        void ClearPies();
+        void SeedDatabase();
     }
 }

@@ -44,5 +44,15 @@ namespace BethanysPieShop.Models
         {
             throw new NotImplementedException();
         }
+
+        public void ClearPies()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SeedDatabase()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

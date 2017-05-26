@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BethanysPieShop.Models
 {
@@ -22,6 +23,12 @@ namespace BethanysPieShop.Models
         public void Save()
         {
             _appDbContext.SaveChanges();
+        }
+
+        public void ClearCategories()
+        {
+            _appDbContext.Categories.RemoveRange(Categories);
+            _appDbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Categories', RESEED, 0)");
         }
     }
 }

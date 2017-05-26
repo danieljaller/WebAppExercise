@@ -10,5 +10,6 @@ namespace BethanysPieShop.Models
         IEnumerable<Category> Categories { get; }
         void AddCategory(Category category);
         void Save();
+        void ClearCategories();
     }
 }

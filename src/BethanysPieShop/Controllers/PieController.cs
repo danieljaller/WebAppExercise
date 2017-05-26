@@ -69,5 +69,16 @@ namespace BethanysPieShop.Controllers
             return View();
         }
 
+        [HttpPut]
+        public IActionResult RenamePie(int id, string newName)
+        {
+            var pie = _pieRepository.GetPieById(id);
+            pie.Name = newName;
+            _pieRepository.UpdatePie(pie);
+            _pieRepository.Save();
+
+            return Content($"{newName}");
+        }
+
     }
 }

@@ -13,6 +13,8 @@ namespace BethanysPieShop.ViewModels
         [StringLength(25, MinimumLength = 5, ErrorMessage = "Name must be between 5 and 25 letters")]
         public string PieName { get; set; }
 
+        [StringLength(250)]
+        public string ExtraDescription { get; set; }
         public string CategoryName { get; set; }
         public List<SelectListItem> Categories { get; set; }
 

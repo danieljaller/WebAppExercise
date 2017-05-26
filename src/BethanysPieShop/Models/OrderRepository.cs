@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BethanysPieShop.Models
 {
@@ -40,6 +41,14 @@ namespace BethanysPieShop.Models
             }
 
             _appDbContext.SaveChanges();
+        }
+
+        public void ClearOrders()
+        {
+            _appDbContext.OrderDetails.RemoveRange(_appDbContext.OrderDetails);
+            _appDbContext.Orders.RemoveRange(_appDbContext.Orders);
+            _appDbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('OrderDetails', RESEED, 0)");
+            _appDbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('Orders', RESEED, 0)");
         }
     }
 }
