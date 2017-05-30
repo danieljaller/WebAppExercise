@@ -55,6 +55,30 @@ namespace BethanysPieShop.Controllers
             });
         }
 
+        public ViewResult ListInPriceRange(string priceRange)
+        {
+            IEnumerable<Pie> pies = new List<Pie>();
+
+            switch (priceRange)
+            {
+                case "Cheap":
+                    pies = _pieRepository.Pies.Where(p => p.Price < 13);
+                    break;
+                case "Medium":
+                    pies = _pieRepository.Pies.Where(p => p.Price < 16 && p.Price > 13);
+                    break;
+                case "Expensive":
+                    pies = _pieRepository.Pies.Where(p => p.Price > 16);
+                    break;
+            }
+            
+            return View("List", new PiesListViewModel()
+            {
+                Pies = pies,
+                CurrentCategory = string.Empty
+            });
+        }
+
         public IActionResult Details(int id)
         {
             var pie = _pieRepository.GetPieById(id);

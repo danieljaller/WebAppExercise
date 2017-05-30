@@ -91,5 +91,11 @@ namespace BethanysPieShop.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [AllowAnonymous]
+        public IActionResult CheckIfLoggedIn()
+        {
+            return View();
+        }
     }
 }

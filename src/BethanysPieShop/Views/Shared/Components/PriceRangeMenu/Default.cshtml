@@ -1,0 +1,28 @@
+﻿
+<li class="dropdown">
+    <a asp-controller="Pie"
+       asp-action="ListInPriceRange"
+       class="dropdown-toggle" data-toggle="dropdown">Pies by price<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        
+        <li>
+            <a asp-controller="Pie" asp-action="ListInPriceRange" asp-route-priceRange="Cheap">
+                Cheap</a>
+        </li>
+        <li>
+            <a asp-controller="Pie" asp-action="ListInPriceRange" asp-route-priceRange="Medium">
+                Medium</a>
+        </li>
+        <li>
+            <a asp-controller="Pie" asp-action="ListInPriceRange" asp-route-priceRange="Expensive">
+                Expensive</a>
+        </li>
+        
+        <li class="divider"></li>
+        <li>
+            <a asp-controller="Pie" asp-action="List" asp-route-Category="">View all pies</a>
+        </li>
+        <li>
+        </li>
+    </ul>
+</li>
